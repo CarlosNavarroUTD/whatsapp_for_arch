@@ -5,10 +5,10 @@ pkgbase = whatsapp-fl
 xdata = pkgtype=pkg
 pkgver = 1.0-1
 pkgdesc = Una aplicación de WhatsApp para Linux.
-url = https://github.com/usuario/nombre-del-repo
-builddate = 1726906798
+url = https://github.com/CarlosNavarroUTD/whatsapp_for_arch.git
+builddate = 1726907556
 packager = Unknown Packager
-size = 3964
+size = 4191
 arch = any
 license = MIT
 depend = python

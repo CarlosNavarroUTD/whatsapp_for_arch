@@ -14,6 +14,13 @@ echo "Directorio actual: $(pwd)"
 cd /home/carlosn/proyectos/whatsapp_fl || { echo "No se pudo cambiar al directorio del proyecto"; exit 1; }
 echo "Cambiado al directorio: $(pwd)"
 
+# Crea un entorno virtual si no existe
+if [ ! -d "venv" ]; then
+    echo "Creando el entorno virtual..."
+    python -m venv venv || { echo "No se pudo crear el entorno virtual"; exit 1; }
+    echo "Entorno virtual creado"
+fi
+
 # Activa el entorno virtual
 source venv/bin/activate || { echo "No se pudo activar el entorno virtual"; exit 1; }
 echo "Entorno virtual activado"
