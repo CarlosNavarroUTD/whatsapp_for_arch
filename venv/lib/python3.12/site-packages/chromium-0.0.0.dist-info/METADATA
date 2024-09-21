@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: chromium
+Version: 0.0.0
+Summary: A hobby project
+Author-email: chromium <kontakt@matematikk.as>
+Project-URL: Homepage, https://matematikk.as
+Project-URL: Issues, https://matematikk.as
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENCE
+
+# Example Package
+
+This is a simple example package. You can use
+[GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
+to write your content.

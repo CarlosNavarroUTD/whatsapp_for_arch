@@ -1,0 +1,1 @@
+/home/carlosn/proyectos/whatsapp_fl/requirements.txt

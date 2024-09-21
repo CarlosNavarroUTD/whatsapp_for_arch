@@ -1,0 +1,95 @@
+import logging
+import sys
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import os
+
+# Configuración del logging
+logging.basicConfig(
+    filename='/tmp/whatsapp_app.log',
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+def main():
+    logging.info("Aplicación iniciada")
+    
+    # Configura las opciones del navegador
+    chrome_options = Options()
+    chrome_options.add_argument("--app=https://web.whatsapp.com/")  # Modo app sin controles de navegación
+    chrome_options.add_argument("--window-size=1024,768")  # Tamaño de ventana personalizado
+    chrome_options.add_argument("--window-position=center")  # Centra la ventana en la pantalla
+    chrome_options.add_argument("--disable-infobars")  # Desactiva las barras de información
+    chrome_options.add_argument("--disable-extensions")  # Desactiva las extensiones
+
+    # Habilitar notificaciones
+    chrome_options.add_argument("--enable-notifications")
+
+    # Configurar la integración con las notificaciones del sistema
+    chrome_options.add_argument("--use-system-clipboard")
+    chrome_options.add_argument("--password-store=basic")
+
+    # Configurar el directorio de usuario para Chrome
+    user_data_dir = os.path.expanduser('~/.config/google-chrome')
+    chrome_options.add_argument(f"user-data-dir={user_data_dir}")
+
+    # Especifica la ruta correcta de chromedriver
+    service = Service("/usr/bin/chromedriver")
+
+    try:
+        # Inicializa el navegador con el servicio y opciones
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+        logging.info("Navegador Chrome iniciado correctamente")
+
+        # Espera a que el usuario cierre la ventana
+        input("Presiona Enter para cerrar la ventana...")
+
+    except Exception as e:
+        logging.exception("Se produjo un error al iniciar el navegador")
+    finally:
+        try:
+            driver.quit()
+            logging.info("Navegador Chrome cerrado correctamente")
+        except Exception as e:
+            logging.warning("Error al intentar cerrar el navegador")
+    
+    logging.info("Aplicación finalizada")
+
+if __name__ == "__main__":
+    logging.info(f"Versión de Python: {sys.version}")
+    try:
+        main()
+    except Exception as e:
+        logging.exception("Se produjo un error en la ejecución del programa")
+
+
+--launch_whatsapp.sh--
+
+#!/bin/bash
+cd /home/carlosn/proyectos/whatsapp_fl || exit
+source venv/bin/activate || exit
+
+# Ejecuta el script y captura la salida y los errores
+nohup python app.py > /tmp/whatsapp_app.log 2>&1 &
+
+# Verifica si ocurrió un error
+if [ $? -ne 0 ]; then
+    echo "Se produjo un error al ejecutar la aplicación. Revisa el log en /tmp/whatsapp_app.log"
+    echo "Presiona Enter para cerrar esta ventana..."
+    read -r
+fi
+
+
+--whatsapp.desktop--
+[Desktop Entry]
+Name=WhatsApp
+Exec=/bin/bash -c "cd /home/carlosn/proyectos/whatsapp_fl && ./launch_whatsapp.sh"
+Icon=/home/carlosn/proyectos/whatsapp_fl/static/img/whatsapp_icon.png
+Type=Application
+Categories=Network;InstantMessaging;
+Terminal=False
+
+
+why my sistem when i opened from the menu is open but closed instantly?
+when i open it manualy following all the steps it open normaly
